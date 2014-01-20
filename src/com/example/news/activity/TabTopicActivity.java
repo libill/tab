@@ -13,7 +13,7 @@ public class TabTopicActivity extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_topic);
+		setContentView(R.layout.activity_topic);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {

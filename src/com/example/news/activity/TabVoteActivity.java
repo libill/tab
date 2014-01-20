@@ -13,7 +13,7 @@ public class TabVoteActivity extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_vote);
+		setContentView(R.layout.activity_vote);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {

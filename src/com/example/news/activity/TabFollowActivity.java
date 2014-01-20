@@ -13,7 +13,7 @@ public class TabFollowActivity extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_follow);
+		setContentView(R.layout.activity_follow);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {

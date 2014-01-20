@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -15,9 +14,6 @@ import android.widget.TextView;
 
 import com.example.news.IntroductionActivity;
 import com.example.news.R;
-import com.example.news.R.drawable;
-import com.example.news.R.id;
-import com.example.news.R.layout;
 import com.example.news.utils.MoveBg;
 
 public class MainActivity extends TabActivity {
@@ -33,7 +29,7 @@ public class MainActivity extends TabActivity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_bottom);
+		setContentView(R.layout.layout_tabhost);
 		bottom_layout = (RelativeLayout) findViewById(R.id.layout_bottom);
 		
 		tvTitle = (TextView) findViewById(R.id.textTile);

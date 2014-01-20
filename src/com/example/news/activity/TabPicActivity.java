@@ -13,7 +13,7 @@ public class TabPicActivity extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_pic);
+		setContentView(R.layout.activity_pic);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
