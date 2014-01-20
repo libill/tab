@@ -3,7 +3,7 @@
     android:id="@+id/topBg"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#00ccc3" >
+    android:background="#6c7cf3" >
 
     <TextView
         android:id="@+id/textTile"

@@ -1,5 +1,7 @@
 package com.example.news;
 
+import com.example.news.activity.MainActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

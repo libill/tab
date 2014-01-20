@@ -25,14 +25,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="MainActivity"></activity>
-        <activity android:name="IntroductionActivity"></activity>
         
-        <activity android:name="TabNewsActivity"></activity>
-        <activity android:name="TabTopicActivity"></activity>
-        <activity android:name="TabPicActivity"></activity>
-        <activity android:name="TabFollowActivity"></activity>
-        <activity android:name="TabVoteActivity"></activity>
+        <activity android:name="com.example.news.IntroductionActivity"></activity>
+        
+        <activity android:name="com.example.news.activity.MainActivity"></activity>
+        
+        <activity android:name="com.example.news.activity.TabNewsActivity"></activity>
+        <activity android:name="com.example.news.activity.TabTopicActivity"></activity>
+        <activity android:name="com.example.news.activity.TabPicActivity"></activity>
+        <activity android:name="com.example.news.activity.TabFollowActivity"></activity>
+        <activity android:name="com.example.news.activity.TabVoteActivity"></activity>
 
     </application>
 

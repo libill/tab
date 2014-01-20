@@ -1,16 +1,19 @@
-package com.example.news;
+package com.example.news.activity;
 
+import com.example.news.R;
+import com.example.news.R.layout;
+import com.example.news.R.menu;
 import com.example.news.utils.DialogUtil;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 
-public class TabPicActivity extends Activity {
+public class TabTopicActivity extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_pic);
+		setContentView(R.layout.layout_topic);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -19,6 +22,6 @@ public class TabPicActivity extends Activity {
 	}
 
 	public void onBackPressed() {
-		DialogUtil.showExitDialog(TabPicActivity.this);
+		DialogUtil.showExitDialog(TabTopicActivity.this);
 	}
 }
