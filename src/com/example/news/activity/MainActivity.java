@@ -24,7 +24,7 @@ public class MainActivity extends TabActivity {
 	ImageView img;
 	int startLeft;
 
-	TextView tvTitle;
+	public static TextView tvTitle;
 	SharedPreferences preferences;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,32 +62,32 @@ public class MainActivity extends TabActivity {
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			switch (checkedId) {
 			case R.id.radio_news:
-				tvTitle.setText("news");
+				setTopTitle("news");
 				tabHost.setCurrentTabByTag("news");
 				// moveFrontBg(img, startLeft, 0, 0, 0);
 				MoveBg.moveFrontBg(img, startLeft, 0, 0, 0);
 				startLeft = 0;
 				break;
 			case R.id.radio_topic:
-				tvTitle.setText("topic");
+				setTopTitle("topic");
 				tabHost.setCurrentTabByTag("topic");
 				MoveBg.moveFrontBg(img, startLeft, img.getWidth(), 0, 0);
 				startLeft = img.getWidth();
 				break;
 			case R.id.radio_pic:
-				tvTitle.setText("picture");
+				setTopTitle("picture");
 				tabHost.setCurrentTabByTag("picture");
 				MoveBg.moveFrontBg(img, startLeft, img.getWidth() * 2, 0, 0);
 				startLeft = img.getWidth() * 2;
 				break;
 			case R.id.radio_follow:
-				tvTitle.setText("follow");
+				setTopTitle("follow");
 				tabHost.setCurrentTabByTag("follow");
 				MoveBg.moveFrontBg(img, startLeft, img.getWidth() * 3, 0, 0);
 				startLeft = img.getWidth() * 3;
 				break;
 			case R.id.radio_vote:
-				tvTitle.setText("vote");
+				setTopTitle("vote");
 				tabHost.setCurrentTabByTag("vote");
 				MoveBg.moveFrontBg(img, startLeft, img.getWidth() * 4, 0, 0);
 				startLeft = img.getWidth() * 4;
@@ -114,6 +114,10 @@ public class MainActivity extends TabActivity {
 		editor.putInt("count", ++count);
 		// 提交修改
 		editor.commit();
+	}
+	
+	public static void setTopTitle(String s){
+		tvTitle.setText(s);
 	}
 
 }
