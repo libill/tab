@@ -2,6 +2,8 @@ package com.example.news;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -20,10 +22,14 @@ public class MainActivity extends TabActivity {
 	ImageView img;
 	int startLeft;
 
+	SharedPreferences preferences;
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_bottom);
 		bottom_layout = (RelativeLayout) findViewById(R.id.layout_bottom);
+
+		showHelp();
 
 		tabHost = getTabHost();
 
@@ -84,5 +90,22 @@ public class MainActivity extends TabActivity {
 			}
 		}
 	};
+
+	public void showHelp() {
+		preferences = getSharedPreferences("count", MODE_WORLD_READABLE);
+		int count = preferences.getInt("count", 0);
+		// 判断程序与第几次运行，如果是第一次运行则跳转到引导页面
+		if (count == 0) {
+			Intent intent = new Intent(MainActivity.this,
+					IntroductionActivity.class);
+			startActivity(intent);
+		}
+
+		Editor editor = preferences.edit();
+		// 存入数据
+		editor.putInt("count", ++count);
+		// 提交修改
+		editor.commit();
+	}
 
 }

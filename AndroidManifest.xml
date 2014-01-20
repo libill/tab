@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name="MainActivity"></activity>
+        <activity android:name="IntroductionActivity"></activity>
         
         <activity android:name="TabNewsActivity"></activity>
         <activity android:name="TabTopicActivity"></activity>
