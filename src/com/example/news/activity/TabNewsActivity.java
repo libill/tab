@@ -17,11 +17,6 @@ public class TabNewsActivity extends Activity {
 		setContentView(R.layout.activity_news);
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
 	public void onBackPressed() {
 		DialogUtil.showExitDialog(TabNewsActivity.this);
 	}
