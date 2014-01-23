@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.news.IntroductionActivity;
 import com.example.news.R;
+import com.example.news.utils.Constants.Extra;
+import static com.example.news.utils.Constants.Extra.IMAGES;
 import com.example.news.utils.MoveBg;
 
 public class MainActivity extends TabActivity {
@@ -38,7 +40,7 @@ public class MainActivity extends TabActivity {
 		tabHost = getTabHost();
 
 		tabHost.addTab(tabHost.newTabSpec("news").setIndicator("News")
-				.setContent(new Intent(this, TabNewsActivity.class)));
+				.setContent(new Intent(this, TabNewsActivity.class).putExtra(Extra.IMAGES, IMAGES)));
 		tabHost.addTab(tabHost.newTabSpec("topic").setIndicator("Topic")
 				.setContent(new Intent(this, TabTopicActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec("picture").setIndicator("Picture")
