@@ -22,9 +22,10 @@ public class TabNewsAdapter extends PagerAdapter {
 	private String[] images;
 	Context context;
 	
-	public TabNewsAdapter(Context context, String[] images){
+	public TabNewsAdapter(Context context, String[] images, DisplayImageOptions options){
 		this.images = images;
 		this.context = context;
+		this.options = options;
 		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
 	}
 

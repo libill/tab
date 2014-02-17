@@ -29,6 +29,7 @@ public class MainActivity extends TabActivity {
 	public static TextView tvTitle;
 	SharedPreferences preferences;
 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_tabhost);
