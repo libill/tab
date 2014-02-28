@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/focusPic"
         android:layout_width="match_parent"
         android:layout_height="150dp" >
 
@@ -21,5 +22,9 @@
             android:padding="1dip" />
 
     </RelativeLayout>
+    <ListView
+	    android:id="@android:id/list"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" />
 
 </LinearLayout>

@@ -28,4 +28,7 @@
     <string name="text_logout">退出</string>
     <string name="text_logout_app">确认退出客户端？</string>
     
+    
+    <string name="descr_image">Image</string>
+    
 </resources>

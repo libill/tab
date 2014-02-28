@@ -5,6 +5,7 @@ import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,9 +14,16 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.news.R;
+import com.example.news.adapter.MainItemAdapter;
 import com.example.news.adapter.TabNewsAdapter;
 import com.example.news.utils.Constants.Extra;
 import com.example.news.utils.DialogUtil;
@@ -35,13 +43,23 @@ public class TabNewsActivity extends Activity {
 			"http://www.google.com.hk/images/srpr/logo11w.png",
 			"http://p0.qhimg.com/t012405121172f4352c.png",
 			"http://www.sogou.com/images/logo_l2.gif",
+			"http://www.google.com.hk/images/srpr/logo11w.png",
+			"http://p0.qhimg.com/t012405121172f4352c.png",
+			"http://www.sogou.com/images/logo_l2.gif",
 			"http://www.soso.com/soso/images/logo_index.png" };
 	private static final String STATE_POSITION = "STATE_POSITION";
 	DisplayImageOptions options;
+	
+	protected AbsListView listView;
+	RelativeLayout rlFocusPic;
+	int i;
 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news);
+		
+		setFocusPicShow();
 
 		Bundle bundle = getIntent().getExtras();
 
@@ -82,6 +100,23 @@ public class TabNewsActivity extends Activity {
 		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
 		mIndicator.setViewPager(showPager);
 
+		
+		//MainItem
+		listView = (ListView) findViewById(android.R.id.list);
+		((ListView) listView).setAdapter(new MainItemAdapter(TabNewsActivity.this, imageUrls, options));
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				startImagePagerActivity(position);
+			}
+		});
+	}
+	
+	private void startImagePagerActivity(int position) {
+		Intent intent = new Intent(this, TabNewsActivity.class);
+		intent.putExtra(Extra.IMAGES, imageUrls);
+		intent.putExtra(Extra.IMAGE_POSITION, position);
+		startActivity(intent);
 	}
 
 	private final Handler viewHandler = new Handler() {
@@ -114,7 +149,29 @@ public class TabNewsActivity extends Activity {
 			timerSchedule.cancel();
 		}
 	}
+	
+	/**
+	 * 控制幻灯片是否显示
+	 */
+	public void setFocusPicShow(){
+		rlFocusPic = (RelativeLayout) findViewById(R.id.focusPic);
+		MainActivity.tvTitle.setOnClickListener(new OnClickListener(){
 
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (i % 2 == 0) {
+					rlFocusPic.setVisibility(View.GONE);
+				} else {
+					rlFocusPic.setVisibility(View.VISIBLE);
+				}
+				i++;
+			}
+			
+		});
+	}
+
+	@Override
 	public void onBackPressed() {
 		DialogUtil.showExitDialog(TabNewsActivity.this);
 	}
