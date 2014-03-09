@@ -1,6 +1,6 @@
 package com.example.news;
 
-import com.example.news.activity.MainActivity;
+import com.example.news.activity.TabHostActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +14,7 @@ public class WelcomeActivity extends Activity {
 	Handler mHandler = new Handler(){
 		public void handleMessage(Message msg){
 			if (msg.what == MSG_TO_MAIN) {
-				Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+				Intent intent = new Intent(WelcomeActivity.this, TabHostActivity.class);
 				startActivity(intent);
 				WelcomeActivity.this.finish();
 			}

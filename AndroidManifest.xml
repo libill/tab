@@ -19,6 +19,7 @@
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:name="com.example.news.WelcomeActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,16 +28,36 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.example.news.IntroductionActivity"></activity>
+        <activity 
+            android:name="com.example.news.IntroductionActivity" 
+            android:screenOrientation="portrait" />
         
-        <activity android:name="com.example.news.activity.MainActivity"></activity>
+        <activity 
+            android:name="com.example.news.activity.TabHostActivity" 
+            android:screenOrientation="portrait" />
         
-        <activity android:name="com.example.news.activity.TabNewsActivity"></activity>
-        <activity android:name="com.example.news.activity.TabTopicActivity"></activity>
-        <activity android:name="com.example.news.activity.TabPicActivity"></activity>
-        <activity android:name="com.example.news.activity.TabFollowActivity"></activity>
-        <activity android:name="com.example.news.activity.TabVoteActivity"></activity>
-
+        <activity 
+            android:name="com.example.news.activity.MainActivity" 
+            android:screenOrientation="portrait" />
+        <activity 
+            android:name="com.example.news.activity.HotsActivity"
+            android:screenOrientation="portrait" />
+        <activity 
+            android:name="com.example.news.activity.FlashActivity"
+			android:screenOrientation="portrait" />
+        <activity 
+            android:name="com.example.news.activity.RecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity 
+            android:name="com.example.news.activity.MoreActivity"
+            android:screenOrientation="portrait" />
+        <activity 
+            android:name="com.example.news.activity.WebViewActivity"
+            android:screenOrientation="portrait" />
+        
+        <activity 
+            android:name="com.example.news.activity.DetailMainActivity"
+			android:screenOrientation="portrait" />
     </application>
 
 </manifest>

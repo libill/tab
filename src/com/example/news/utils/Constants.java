@@ -21,6 +21,9 @@ import com.example.news.R;
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
  */
 public final class Constants {
+	public static String recommend = "recommend";
+	public final static int REQUEST_PROMOS_LISTP = 1;
+	public static final int REQUEST_IO_ERROR = 999;
 
 	public static final String[] IMAGES = new String[] {
 			// Heavy images

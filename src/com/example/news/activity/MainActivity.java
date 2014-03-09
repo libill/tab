@@ -1,126 +1,256 @@
 package com.example.news.activity;
 
-import android.app.TabActivity;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TabHost;
-import android.widget.TextView;
 
-import com.example.news.IntroductionActivity;
 import com.example.news.R;
+import com.example.news.adapter.MainItemAdapter;
+import com.example.news.adapter.TabNewsAdapter;
+import com.example.news.control.JsonRequestManager;
+import com.example.news.control.ResponseListener;
+import com.example.news.control.ResponseObject;
 import com.example.news.utils.Constants.Extra;
-import static com.example.news.utils.Constants.Extra.IMAGES;
-import com.example.news.utils.MoveBg;
+import com.example.news.utils.DialogUtil;
+import com.example.news.view.CirclePageIndicator;
+import com.example.news.vo.GoodsInfo;
+import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
-public class MainActivity extends TabActivity {
-	TabHost tabHost;
-	TabHost.TabSpec tabSpec;
-	RadioGroup radioGroup;
-	RelativeLayout bottom_layout;
-	ImageView img;
-	int startLeft;
-
-	public static TextView tvTitle;
-	SharedPreferences preferences;
+public class MainActivity extends Activity implements ResponseListener{
+	public JsonRequestManager requestManager;
+	private ViewPager showPager;
+	private TabNewsAdapter newsAdapter;
+	private CirclePageIndicator mIndicator;
+	int pagerPosition;
+	Timer timerSchedule;
+	List<GoodsInfo> goodsInfo;
+	List<Map<String, Object>> goodsInfoList;
+	private AtomicInteger what = new AtomicInteger(0);
+	String[] imageUrls = { "http://img.59miao.com/sp/15001/20140304094341_750x300.jpg",
+			"http://img.59miao.com/sp/1018/20140305100210_750x300.jpg",
+			"http://img.59miao.com/sp/33304/20140305111803_750x300.jpg",
+			"http://img.59miao.com/sp/1018/20140306093105_750x300.jpg",
+			"http://img.59miao.com/sp/1151/20140306093218_750x300.jpg" };
+	private static final String STATE_POSITION = "STATE_POSITION";
+	DisplayImageOptions options;
+	
+	protected AbsListView listView;
+	RelativeLayout rlFocusPic;
+	int i;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_tabhost);
-		bottom_layout = (RelativeLayout) findViewById(R.id.layout_bottom);
-		
-		tvTitle = (TextView) findViewById(R.id.textTile);
-		showHelp();
+		setContentView(R.layout.activity_news);
+		goodsInfo = new ArrayList<GoodsInfo>();
+//		setFocusPicShow();
 
-		tabHost = getTabHost();
+		Bundle bundle = getIntent().getExtras();
 
-		tabHost.addTab(tabHost.newTabSpec("news").setIndicator("News")
-				.setContent(new Intent(this, TabNewsActivity.class).putExtra(Extra.IMAGES, IMAGES)));
-		tabHost.addTab(tabHost.newTabSpec("topic").setIndicator("Topic")
-				.setContent(new Intent(this, TabTopicActivity.class)));
-		tabHost.addTab(tabHost.newTabSpec("picture").setIndicator("Picture")
-				.setContent(new Intent(this, TabPicActivity.class)));
-		tabHost.addTab(tabHost.newTabSpec("follow").setIndicator("Follow")
-				.setContent(new Intent(this, TabFollowActivity.class)));
-		tabHost.addTab(tabHost.newTabSpec("vote").setIndicator("Vote")
-				.setContent(new Intent(this, TabVoteActivity.class)));
+		pagerPosition = bundle.getInt(Extra.IMAGE_POSITION, 0);
 
-		radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
-		radioGroup.setOnCheckedChangeListener(checkedChangeListener);
+		if (savedInstanceState != null) {
+			pagerPosition = savedInstanceState.getInt(STATE_POSITION);
+		}
 
-		img = new ImageView(this);
-		img.setImageResource(R.drawable.tab_front_bg);
-		bottom_layout.addView(img);
-	}
+		options = new DisplayImageOptions.Builder()
+				.showImageForEmptyUri(R.drawable.ic_empty)
+				.showImageOnFail(R.drawable.ic_error)
+				.resetViewBeforeLoading()
+				.cacheOnDisc()
+				.imageScaleType(ImageScaleType.EXACTLY)
+				.cacheInMemory()
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				.displayer(new FadeInBitmapDisplayer(300))
+				.build();
 
-	private OnCheckedChangeListener checkedChangeListener = new OnCheckedChangeListener() {
+		showPager = (ViewPager) findViewById(R.id.showPager);
+		newsAdapter = new TabNewsAdapter(MainActivity.this, imageUrls, options);
+		showPager.setAdapter(newsAdapter);
+		showPager.setCurrentItem(pagerPosition);
 
-		@Override
-		public void onCheckedChanged(RadioGroup group, int checkedId) {
-			switch (checkedId) {
-			case R.id.radio_news:
-				setTopTitle("news");
-				tabHost.setCurrentTabByTag("news");
-				// moveFrontBg(img, startLeft, 0, 0, 0);
-				MoveBg.moveFrontBg(img, startLeft, 0, 0, 0);
-				startLeft = 0;
-				break;
-			case R.id.radio_topic:
-				setTopTitle("topic");
-				tabHost.setCurrentTabByTag("topic");
-				MoveBg.moveFrontBg(img, startLeft, img.getWidth(), 0, 0);
-				startLeft = img.getWidth();
-				break;
-			case R.id.radio_pic:
-				setTopTitle("picture");
-				tabHost.setCurrentTabByTag("picture");
-				MoveBg.moveFrontBg(img, startLeft, img.getWidth() * 2, 0, 0);
-				startLeft = img.getWidth() * 2;
-				break;
-			case R.id.radio_follow:
-				setTopTitle("follow");
-				tabHost.setCurrentTabByTag("follow");
-				MoveBg.moveFrontBg(img, startLeft, img.getWidth() * 3, 0, 0);
-				startLeft = img.getWidth() * 3;
-				break;
-			case R.id.radio_vote:
-				setTopTitle("vote");
-				tabHost.setCurrentTabByTag("vote");
-				MoveBg.moveFrontBg(img, startLeft, img.getWidth() * 4, 0, 0);
-				startLeft = img.getWidth() * 4;
-				break;
+		startDisplayTimer();
 
-			default:
-				break;
+		showPager.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//stopDisplayTimer();
+				return false;
 			}
-		}
-	};
 
-	public void showHelp() {
-		preferences = getSharedPreferences("count", MODE_WORLD_READABLE);
-		int count = preferences.getInt("count", 0);
-		// 判断程序与第几次运行，如果是第一次运行则跳转到引导页面
-		if (count == 0) {
-			Intent intent = new Intent(MainActivity.this,
-					IntroductionActivity.class);
-			startActivity(intent);
-		}
+		});
 
-		Editor editor = preferences.edit();
-		// 存入数据
-		editor.putInt("count", ++count);
-		// 提交修改
-		editor.commit();
+		mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
+		mIndicator.setViewPager(showPager);
+		
+		requestManager = JsonRequestManager.getInstance(this);
+		new Thread(runnable).start();
+		
+		//MainItem
+		listView = (ListView) findViewById(android.R.id.list);
+		//((ListView) listView).setAdapter(new MainItemAdapter(TabNewsActivity.this, imageUrls, options));
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				startImagePagerActivity(position);
+			}
+		});
 	}
 	
-	public static void setTopTitle(String s){
-		tvTitle.setText(s);
+	//请求网络
+	Runnable runnable = new Runnable(){
+	    @Override
+	    public void run() {
+	        //
+	        // TODO: http request.
+	        //
+	    	requestManager.getPromosList();
+	    }
+	};
+	
+	private void startImagePagerActivity(int position) {
+		Intent intent = new Intent(this, DetailMainActivity.class);
+		intent.putExtra(Extra.IMAGES, imageUrls);
+		
+		intent.putExtra("title", goodsInfo.get(position).getTitle());
+		intent.putExtra("modified", goodsInfo.get(position).getModified());
+		intent.putExtra("pic_url", goodsInfo.get(position).getPic_url());
+		intent.putExtra("price", goodsInfo.get(position).getPrice());
+		intent.putExtra("seller_name", goodsInfo.get(position).getSeller_name());
+		intent.putExtra("click_url", goodsInfo.get(position).getClick_url());
+		
+		intent.putExtra(Extra.IMAGE_POSITION, position);
+		startActivity(intent);
+		finish();
 	}
 
+	private final Handler viewHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			if (msg.what ==100) {
+				((ListView) listView).setAdapter(new MainItemAdapter(MainActivity.this, goodsInfo, options));
+			} else {
+				showPager.setCurrentItem(msg.what);
+			}
+			super.handleMessage(msg);
+		}
+	};
+	
+	public void startDisplayTimer(){
+		timerSchedule = new Timer();
+		
+		timerSchedule.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				pagerPosition = showPager.getCurrentItem()+1;
+				if (imageUrls.length - 1 < pagerPosition) {
+					pagerPosition = 0;
+				}
+				viewHandler.sendEmptyMessage(pagerPosition);
+				
+			}
+		}, 0, 5000);
+	}
+	
+	public void stopDisplayTimer(){
+		if (timerSchedule != null) {
+			timerSchedule.cancel();
+		}
+	}
+	
+	/**
+	 * 控制幻灯片是否显示
+	 */
+	public void setFocusPicShow(){
+		rlFocusPic = (RelativeLayout) findViewById(R.id.focusPic);
+		TabHostActivity.tvTitle.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (i % 2 == 0) {
+					rlFocusPic.setVisibility(View.GONE);
+				} else {
+					rlFocusPic.setVisibility(View.VISIBLE);
+				}
+				i++;
+			}
+			
+		});
+	}
+
+	@Override
+	public void onBackPressed() {
+		DialogUtil.showExitDialog(MainActivity.this);
+	}
+
+	@Override
+	public void dataResponse(ResponseObject responseObject) {
+		String jsonString = responseObject.getResponseMessage();
+		JSONArray jsArray = null;
+		try {
+			JSONObject jsonObject = new JSONObject(jsonString);
+			JSONObject jsItem1 = jsonObject.optJSONObject("items_search");
+			JSONObject jsItem2 = jsItem1.optJSONObject("items");
+			jsArray = jsItem2.optJSONArray("item");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 Gson gson = new Gson();
+		 for(int i=0;i<jsArray.length();i++){
+			 JSONObject jsItem = jsArray.optJSONObject(i);
+			 GoodsInfo info = gson.fromJson(jsItem.toString(), GoodsInfo.class);
+			 goodsInfo.add(info);
+		 }
+		 //显示列表
+		 if (goodsInfo != null) {
+			 viewHandler.sendEmptyMessage(100);
+		 }
+		//((ListView) listView).setAdapter(new MainItemAdapter(TabNewsActivity.this, goodsInfo, options));
+		switch (responseObject.getType()) {
+		case 1:
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void errorResponse(ResponseObject responseObject) {
+		// TODO Auto-generated method stub
+		
+	}
 }

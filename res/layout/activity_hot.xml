@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+
+        <ScrollView 
+		    android:layout_width="fill_parent"  
+		    android:layout_height="fill_parent"
+		    android:background="#fff" >
+  
+		    <LinearLayout  
+		        android:layout_width="match_parent"  
+		        android:layout_height="wrap_content"  
+		        android:orientation="vertical" >  
+		        
+		        <LinearLayout  
+			        android:layout_width="fill_parent"  
+			        android:layout_height="wrap_content" 
+			        android:orientation="horizontal" >  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content"
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:layout_marginRight="1dp"
+			            android:src="@drawable/first" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content" 
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:src="@drawable/first" />  
+		  		</LinearLayout>
+		  
+		        <ImageView  
+			        android:layout_width="fill_parent"  
+			        android:layout_height="wrap_content" 
+			        android:layout_marginTop="1dp"
+			        android:scaleType="fitXY" 
+		            android:src="@drawable/first1" />  
+		            
+		        <TextView 
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:padding="5dp"
+		            android:background="#dad9d9"
+		            android:text="大型购物商城"/>
+		            
+		        <LinearLayout  
+			        android:layout_width="fill_parent"  
+			        android:layout_height="wrap_content" 
+			        android:background="#c6c6c6"
+			        android:orientation="horizontal" >  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content"
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:layout_marginRight="1dp"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content" 
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content"
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:layout_marginRight="1dp"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content" 
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:src="@drawable/first2" />  
+		  		</LinearLayout>
+		        <LinearLayout  
+			        android:layout_width="fill_parent"  
+			        android:layout_height="wrap_content" 
+			        android:paddingBottom="10dp"
+			        android:background="#c6c6c6"
+			        android:orientation="horizontal" >  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content"
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:layout_marginRight="1dp"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content" 
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:src="@drawable/first2" />
+
+			        <ImageView
+			            android:layout_width="fill_parent"
+			            android:layout_height="wrap_content"
+			            android:layout_marginRight="1dp"
+			            android:layout_weight="1"
+			            android:scaleType="fitXY"
+			            android:src="@drawable/first2" />
+  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content" 
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:src="@drawable/first2" />  
+		  		</LinearLayout>
+
+		        <TextView 
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:padding="5dp"
+		            android:background="#dad9d9"
+		            android:text="大型购物商城"/>
+		            
+		        <LinearLayout  
+			        android:layout_width="fill_parent"  
+			        android:layout_height="wrap_content" 
+			        android:background="#c6c6c6"
+			        android:orientation="horizontal" >  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content"
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:layout_marginRight="1dp"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content" 
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content"
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:layout_marginRight="1dp"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content" 
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:src="@drawable/first2" />  
+		  		</LinearLayout>
+		        <LinearLayout  
+			        android:layout_width="fill_parent"  
+			        android:layout_height="wrap_content" 
+			        android:paddingBottom="10dp"
+			        android:background="#c6c6c6"
+			        android:orientation="horizontal" >  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content"
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:layout_marginRight="1dp"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content" 
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content"
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:layout_marginRight="1dp"
+			            android:src="@drawable/first2" />  
+			        <ImageView
+			            android:layout_width="fill_parent"  
+			            android:layout_height="wrap_content" 
+			            android:scaleType="fitXY"
+			            android:layout_weight="1"
+			            android:src="@drawable/first2" />  
+		  		</LinearLayout>
+		        
+		        
+		    </LinearLayout>  
+  
+		</ScrollView> 
+		
+    
+</LinearLayout>
